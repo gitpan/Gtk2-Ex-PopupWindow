@@ -7,5 +7,8 @@ lib/Gtk2/Ex/PopupWindow.pm
 t/00.load.t
 t/pod-coverage.t
 t/pod.t
+t/test.1.t
+t/test.2.t
+t/test.3.t
 examples/popup-simple.pl
 examples/popup-move-with-parent.pl

@@ -19,13 +19,3 @@ To install this module, run the following commands:
     make
     make test
     make install
-
-
-COPYRIGHT AND LICENCE
-
-Put the correct copyright and licence information here.
-
-Copyright (C) 2005 Ofey Aikon
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.

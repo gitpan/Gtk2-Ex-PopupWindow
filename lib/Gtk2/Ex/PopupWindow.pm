@@ -1,6 +1,6 @@
 package Gtk2::Ex::PopupWindow;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use strict;
 use warnings;
@@ -117,11 +117,96 @@ sub _add_events {
 
 __END__
 
-=head1 AUTHOR
+=head1 NAME
+
+Gtk2::Ex::PopupWindow - A popupwindow that can be attached to any arbitrary widget
+and controlled programatically.
+
+=head1 DESCRIPTION
+
+Widgets such as Gtk2::Menu and Gtk2::ComboBox function by popping open a new window
+containing additional controls. Won't it be nice if you could have your own popup 
+windows containing your own custom widgets ? Gtk2::Ex::PopupWindow does just that.
+
+Gtk2::Ex::PopupWindow gives you a popup window that can be attached to any arbitrary 
+widget. The window itself can be I<shown> and I<hidden> programatically (Typically on
+a button click event on the parent widget).
+
+=head1 SYNOPSIS
+
+	use Gtk2::Ex::PopupWindow;
+	
+	# The parent widget should be pre-defined. We'll choose a button
+	# as the parent here.
+	my $openbutton = Gtk2::Button->new_from_stock('gtk-open');
+	
+	# Create a popupwindow with the button as the parent
+	my $popupwindow = Gtk2::Ex::PopupWindow->new($openbutton);
+	
+	# Open the window on button-release
+	$openbutton->signal_connect('button-release-event' => 
+		sub {
+			$popupwindow->show;
+			return 0;
+		}
+	);
+	
+	# You can add other widgets into the window itself
+	my $text = Gtk2::TextView->new;
+	$text->set_buffer(Gtk2::TextBuffer->new);
+	$popupwindow->{window}->add($text);
+
+=head1 METHODS
+
+=head2 new($parent);
+
+The C<$parent> is the widget to which the popup window will be attached. When the
+window is open, it'll be hanging from this parent widget
+
+	my $popupwindow = Gtk2::Ex::PopupWindow->new($parent);
+
+=head2 show;
+
+Show the window.
+
+	$popupwindow->show;
+
+=head2 hide;
+
+Hide the window.
+
+	$popupwindow->hide;
+
+=head2 toggle;
+
+Toggle between show and hide.
+
+	$popupwindow->toggle;
+
+=head2 set_move_with_parent;
+
+For most cases, you want the popup window to be closed when the user clicks outside
+the window itself. For example, Gtk2::Menu and Gtk2::ComboBox behave this way.
+
+But may be you would like the window to stay open until explicitly closed. In that
+case, you can call C<set_move_with_parent(TRUE)>. If this flag is set, then the
+popup window stays open until explicitly closed using the C<hide> method.
+
+	$popupwindow->set_move_with_parent(TRUE);
+
+=head2 get_move_with_parent;
+
+Returns the value of the flag described above. By default, the flag is set to C<FALSE>.
+
+	print $popupwindow->get_move_with_parent;
+
+=head1 ORIGINAL AUTHOR
 
 Lee Aylward
-Ofey Aikon, C<< <ofey.aikon at gmail dot com> >>
 
+=head1 CURRENT MAINTAINER
+
+Ofey Aikon, C<< <ofey.aikon at gmail dot com> >>
 
 =head1 COPYRIGHT & LICENSE
 

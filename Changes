@@ -3,3 +3,8 @@ Revision history for Gtk2-Ex-PopupWindow
 0.01    Date/time
         First version, released on an unsuspecting world.
 
+0.02    Re-wrote.. Added set_move_with_parent()
+
+0.03	Sep 28, 2005
+	Added real tests
+	Added POD
