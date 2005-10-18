@@ -1,6 +1,6 @@
 package Gtk2::Ex::PopupWindow;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use strict;
 use warnings;
@@ -30,6 +30,11 @@ sub new {
 	return $self;
 }
 
+sub signal_connect {
+	my ($self, $signal, $callback) = @_;
+	$self->{signals}->{$signal} = $callback;
+}
+
 sub set_move_with_parent {
 	my ($popupself, $flag) = @_;
 	$popupself->{move_with_parent} = $flag;
@@ -51,6 +56,7 @@ sub show {
 	my $window = $popupself->{window};
 	$popupself->{window}->move($x,$y);
 	$popupself->{showing} = TRUE;
+	&{ $popupself->{signals}->{'show'} } if $popupself->{signals}->{'show'};	
 	return 0;
 }
 
@@ -58,6 +64,7 @@ sub hide {
 	my ($popupself) = @_;
 	$popupself->{window}->hide;
 	$popupself->{showing} = FALSE;
+	&{ $popupself->{signals}->{'hide'} } if $popupself->{signals}->{'hide'};	
 	return 0;
 }
 
@@ -199,6 +206,20 @@ popup window stays open until explicitly closed using the C<hide> method.
 Returns the value of the flag described above. By default, the flag is set to C<FALSE>.
 
 	print $popupwindow->get_move_with_parent;
+
+=head2 signal_connect($signal, $callback);
+
+See the SIGNALS section to see the supported signals.
+
+=head1 SIGNALS
+
+=head2 show;
+
+This signal gets emitted whenever the popupwindow is shown.
+
+=head2 hide;
+
+This signal gets emitted whenever the popupwindow is hidden.
 
 =head1 ORIGINAL AUTHOR
 

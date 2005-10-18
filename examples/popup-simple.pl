@@ -9,7 +9,7 @@ use Data::Dumper;
 my $window = Gtk2::Window->new;
 $window->signal_connect('destroy', sub {Gtk2->main_quit;});
 
-my $label = Gtk2::Label->new(' Sample Lable ');
+my $label = Gtk2::Label->new('Sample Label');
 my $openbutton = Gtk2::Button->new_from_stock('gtk-open');
 
 my $popupwindow = Gtk2::Ex::PopupWindow->new($openbutton);
@@ -28,6 +28,16 @@ $vbox->pack_start ($hbox, FALSE, TRUE, 0);
 $window->add ($vbox);
 $window->add_events( [ 'button-press-mask' ] );
 
+$popupwindow->signal_connect('show' => 
+	sub {
+		print "Showing\n";
+	}
+);
+$popupwindow->signal_connect('hide' => 
+	sub {
+		print "Hidden\n";
+	}
+);
 $popupwindow->{window}->signal_connect('event' => 
 	sub {
 		my ($self, $event) = @_;

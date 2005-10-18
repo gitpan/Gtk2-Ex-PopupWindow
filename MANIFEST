@@ -10,5 +10,9 @@ t/pod.t
 t/test.1.t
 t/test.2.t
 t/test.3.t
+t/test.4.t
+t/test.5.t
+t/popup-with-child.t
 examples/popup-simple.pl
 examples/popup-move-with-parent.pl
+examples/popup-with-child.pl

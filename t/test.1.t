@@ -9,7 +9,7 @@ use Gtk2::TestHelper tests => 5;
 
 # ------------------------------------ #
 # Show the popup, then hide it
-# The toggle it
+# Then toggle it
 # ------------------------------------ #
 
 my $label = Gtk2::Label->new(' Sample Label ');
